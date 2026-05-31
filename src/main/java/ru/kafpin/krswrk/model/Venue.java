@@ -22,6 +22,6 @@ public class Venue {
 
     @Override
     public String toString() {
-        return name;
+        return name + " (" + capacity + ")";
     }
 }

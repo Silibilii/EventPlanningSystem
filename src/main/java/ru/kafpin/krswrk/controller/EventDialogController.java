@@ -51,10 +51,16 @@ public class EventDialogController {
         venueCombo.setCellFactory(lv -> new ListCell<Venue>() {
             @Override protected void updateItem(Venue item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty || item == null ? null : item.getName());
+                setText(empty || item == null ? null : (item.getName() + " (" + item.getCapacity() + ")"));
             }
         });
-        venueCombo.setButtonCell(venueCombo.getCellFactory().call(null));
+        venueCombo.setButtonCell(new ListCell<Venue>() {
+            @Override protected void updateItem(Venue item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else setText(item.getName() + " (" + item.getCapacity() + ")");
+            }
+        });
 
         statusCombo.setCellFactory(lv -> new ListCell<EventStatus>() {
             @Override protected void updateItem(EventStatus item, boolean empty) {

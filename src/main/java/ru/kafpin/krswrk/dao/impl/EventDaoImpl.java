@@ -171,9 +171,8 @@ public class EventDaoImpl implements EventDao {
         venue.setVenueId(rs.getLong("venue_id"));
         try {
             venue.setName(rs.getString("venue_name"));
-        } catch (SQLException ignored) {}
-        try {
             venue.setAddress(rs.getString("venue_address"));
+            venue.setCapacity(rs.getInt("venue_capacity"));
         } catch (SQLException ignored) {}
         event.setVenue(venue);
         return event;
