@@ -1,0 +1,19 @@
+
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+
+target/
+build/
+.gradle/
+
+
+*.log
+.DS_Store
+Thumbs.db
+
+# *.env
+# *.properties
