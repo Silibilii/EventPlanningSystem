@@ -1,0 +1,7 @@
+module:ru.kafpin.krswrk
+ru.kafpin.krswrk
+ru.kafpin.krswrk.controller
+ru.kafpin.krswrk.dao
+ru.kafpin.krswrk.dao.impl
+ru.kafpin.krswrk.model
+ru.kafpin.krswrk.util
