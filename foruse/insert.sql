@@ -1,15 +1,10 @@
--- ============================================================
--- Детализированное заполнение тестовыми данными (3 мероприятия)
--- ============================================================
 
--- 1. Клиенты
 INSERT INTO eventschema.client (client_name, contact_person, phone, email, is_legal, organization_name, notes) VALUES
     ('Семья Петровых', 'Иван Петров', '+7(910)123-45-67', 'petrov.family@mail.ru', FALSE, NULL, 'Частное лицо, свадьба дочери'),
     ('ООО "Муромский завод"', 'Мария Кузнецова', '+7(910)555-66-77', 'muromzavod@mail.ru', TRUE, 'ООО "Муромский завод"', 'Юбилей директора'),
     ('ИП Смирнов Алексей', 'Алексей Смирнов', '+7(910)777-88-99', 'asmirnov@it.ru', FALSE, NULL, 'IT-конференция')
 ON CONFLICT DO NOTHING;
 
--- 2. Площадки
 INSERT INTO eventschema.venue (venue_name, address, capacity, rental_cost, contact_phone) VALUES
     ('Банкетный зал "Уют"', 'г. Муром, ул. Ленина, д. 10', 50, 15000.00, '+7(4922)55-66-77'),
     ('Конференц-холл "Премьер"', 'г. Владимир, пр-т Ленина, д. 25', 200, 50000.00, '+7(4922)22-33-44'),
@@ -18,34 +13,30 @@ INSERT INTO eventschema.venue (venue_name, address, capacity, rental_cost, conta
     ('Загородный клуб "Берёзка"', 'г. Муром, Сосновый пер., 7', 150, 60000.00, '+7(4922)33-22-11')
 ON CONFLICT DO NOTHING;
 
--- 3. Подрядчики
 INSERT INTO eventschema.contractor (contractor_name, contact_person, phone, email, service_type, price_list, notes) VALUES
-    -- ведущие
+
     ('Антон Сидоров (ведущий)', 'Антон Сидоров', '+7(910)444-55-66', 'anton@show.ru', 'ведущий', 'Вечер до 5 часов – 15000 руб.', 'Работает с аудиторией'),
     ('Студия праздника "Виват"', 'Ольга Виноградова', '+7(910)123-12-12', 'vivat@holiday.ru', 'ведущий', 'Программа под ключ – от 25000 руб.', 'Команда профессиональных ведущих'),
-    -- декораторы
+
     ('Елена Васильева (декор)', 'Елена Васильева', '+7(910)777-88-99', 'elena@decor.ru', 'декоратор', 'Оформление зала – от 10000 руб.', 'Шары, цветы, ткани'),
     ('Студия декора "Арт-Стиль"', 'Мария Соколова', '+7(910)222-33-44', 'artstyle@decor.ru', 'декоратор', 'Флористика, арки – от 20000 руб.', 'Индивидуальный дизайн'),
-    -- кейтеринг
+
     ('Кафе "Шеф-повар"', 'Игорь Мясоедов', '+7(910)666-77-88', 'chef@cafe.ru', 'кейтеринг', 'Банкет от 2000 руб./чел.', 'Выездное обслуживание'),
     ('Ресторан "Вкусно и точка"', 'Елена Менеджер', '+7(910)222-33-44', 'catering@vkusno.ru', 'кейтеринг', 'Фуршет от 1500 руб./гость', 'Скидка 10% при заказе от 50 человек'),
     ('Агентство праздников "Фуршет"', 'Сергей Петров', '+7(910)555-12-34', 'furshet@party.ru', 'кейтеринг', 'Горячие блюда, закуски – от 1200 руб./чел.', 'Доставка и обслуживание'),
-    -- фотографы
+
     ('Мария Фото', 'Мария Фото', '+7(910)999-00-11', 'maria@photo.ru', 'фотограф', '3 часа съёмки – 7000 руб.', 'Репортажная съёмка'),
     ('Александр Петров (фото)', 'Александр Петров', '+7(910)111-22-33', 'photo@example.com', 'фотограф', '2 часа – 5000 руб.', 'Выездная съёмка'),
     ('Фотостудия "Момент"', 'Дмитрий Козлов', '+7(910)333-44-55', 'moment@photo.ru', 'фотограф', 'Свадебный пакет – 15000 руб.', 'Love story и репортаж'),
-    -- звукорежиссёры
+
     ('Дмитрий Звук', 'Дмитрий Звук', '+7(910)123-45-67', 'sound@audio.ru', 'звукорежиссёр', 'Оборудование + работа – 12000 руб.', 'Колонки, микрофоны'),
     ('Студия звука "Акустика"', 'Андрей Громов', '+7(910)444-55-66', 'akustika@sound.ru', 'звукорежиссёр', 'Полный комплект – 20000 руб.', 'Профессиональное оборудование'),
-    -- IT-агентство (прочее)
+
     ('Веб-студия "Айтишник"', 'Алексей Код', '+7(910)123-45-67', 'info@itishnik.ru', 'прочее', 'Разработка сайта под ключ – от 50000 руб.', 'Создание сайтов, интернет-магазинов'),
-    -- транспорт
+
     ('Транспортная компания "Поехали"', 'Иван Водитель', '+7(910)777-11-22', 'poehali@taxi.ru', 'прочее', 'Микроавтобус для гостей – 5000 руб./рейс', 'Свадебный кортеж')
 ON CONFLICT DO NOTHING;
 
--- ============================================================
--- МЕРОПРИЯТИЕ 1: Юбилей директора ООО "Муромский завод" (завершённое)
--- ============================================================
 INSERT INTO eventschema.event (event_name, event_date, budget, status, feedback, client_id, venue_id)
 SELECT 
     'Юбилей директора ООО "Муромский завод"',
@@ -79,7 +70,6 @@ INSERT INTO eventschema.expense (amount, expense_date, description, event_id, co
     (138000.00, '2025-12-20', 'Кейтеринг (дополнительная оплата)', (SELECT event_id FROM eventschema.event WHERE event_name = 'Юбилей директора ООО "Муромский завод"'), (SELECT contractor_id FROM eventschema.contractor WHERE contractor_name = 'Кафе "Шеф-повар"'), 'кейтеринг')
 ON CONFLICT (expense_id) DO NOTHING;
 
--- Гости для мероприятия 1 (30 человек)
 INSERT INTO eventschema.guest (full_name, contact_phone, contact_email, invitation_status, event_id)
 SELECT g.full_name, g.phone, g.email, g.status, ev.event_id
 FROM (VALUES
@@ -117,9 +107,6 @@ FROM (VALUES
 CROSS JOIN (SELECT event_id FROM eventschema.event WHERE event_name = 'Юбилей директора ООО "Муромский завод"') ev
 WHERE NOT EXISTS (SELECT 1 FROM eventschema.guest WHERE full_name = g.full_name AND event_id = ev.event_id);
 
--- ============================================================
--- МЕРОПРИЯТИЕ 2: Свадьба Петровых (в процессе)
--- ============================================================
 INSERT INTO eventschema.event (event_name, event_date, budget, status, feedback, client_id, venue_id)
 SELECT 
     'Свадьба Петровых',
@@ -160,7 +147,6 @@ INSERT INTO eventschema.expense (amount, expense_date, description, event_id, co
     (30000.00, '2026-06-01', 'Свадебный торт', (SELECT event_id FROM eventschema.event WHERE event_name = 'Свадьба Петровых'), (SELECT contractor_id FROM eventschema.contractor WHERE contractor_name = 'Ресторан "Вкусно и точка"'), 'кейтеринг')
 ON CONFLICT (expense_id) DO NOTHING;
 
--- Гости для мероприятия 2 (40 человек, сокращён для читаемости)
 INSERT INTO eventschema.guest (full_name, contact_phone, contact_email, invitation_status, event_id)
 SELECT g.full_name, g.phone, g.email, g.status, ev.event_id
 FROM (VALUES
@@ -188,9 +174,6 @@ FROM (VALUES
 CROSS JOIN (SELECT event_id FROM eventschema.event WHERE event_name = 'Свадьба Петровых') ev
 WHERE NOT EXISTS (SELECT 1 FROM eventschema.guest WHERE full_name = g.full_name AND event_id = ev.event_id);
 
--- ============================================================
--- МЕРОПРИЯТИЕ 3: IT-конференция "Владимир-2026" (планирование)
--- ============================================================
 INSERT INTO eventschema.event (event_name, event_date, budget, status, feedback, client_id, venue_id)
 SELECT 
     'IT-конференция "Владимир-2026"',
@@ -221,7 +204,6 @@ INSERT INTO eventschema.expense (amount, expense_date, description, event_id, co
     (15000.00, '2026-04-10', 'Закупка канцелярии', (SELECT event_id FROM eventschema.event WHERE event_name = 'IT-конференция "Владимир-2026"'), NULL, 'прочее')
 ON CONFLICT DO NOTHING;
 
--- Гости для мероприятия 3 (20 человек)
 INSERT INTO eventschema.guest (full_name, contact_phone, contact_email, invitation_status, event_id)
 SELECT g.full_name, g.phone, g.email, g.status, ev.event_id
 FROM (VALUES
