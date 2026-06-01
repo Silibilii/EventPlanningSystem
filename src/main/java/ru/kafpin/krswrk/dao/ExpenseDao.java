@@ -1,24 +1,59 @@
 package ru.kafpin.krswrk.dao;
 
-import ru.kafpin.krswrk.model.Event;
 import ru.kafpin.krswrk.model.Expense;
-import ru.kafpin.krswrk.model.ExpenseCategory;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Интерфейс доступа к данным для сущности {@link Expense}.
- * Расширяет базовый CRUD интерфейс {@link Dao}.
+ * Предоставляет стандартные CRUD-операции и методы для фильтрации и получения сводок.
  */
-public interface ExpenseDao extends Dao<Expense> {
+public interface ExpenseDao {
+
+    /**
+     * Находит расход по его идентификатору.
+     *
+     * @param id идентификатор расхода
+     * @return Optional с найденным расходом, либо пустой Optional если расход не найден
+     */
+    Optional<Expense> findById(int id);
+
+    /**
+     * Возвращает список всех расходов.
+     *
+     * @return список расходов
+     */
+    List<Expense> findAll();
+
+    /**
+     * Сохраняет новый расход в базе данных.
+     *
+     * @param entity расход для сохранения
+     */
+    void save(Expense entity);
+
+    /**
+     * Обновляет существующий расход в базе данных.
+     *
+     * @param entity расход с обновлёнными данными
+     */
+    void update(Expense entity);
+
+    /**
+     * Удаляет расход по его идентификатору.
+     *
+     * @param id идентификатор удаляемого расхода
+     */
+    void delete(int id);
 
     /**
      * Возвращает все расходы мероприятия без фильтрации.
      *
      * @param eventId идентификатор мероприятия
-     * @return список расходов
+     * @return список расходов, отсортированный по дате расхода (от новых к старым)
      */
     List<Expense> findByEventIdOnly(long eventId);
 
@@ -26,8 +61,8 @@ public interface ExpenseDao extends Dao<Expense> {
      * Возвращает расходы мероприятия по указанной категории.
      *
      * @param eventId  идентификатор мероприятия
-     * @param category категория расхода
-     * @return список расходов
+     * @param category категория расхода (например, "аренда", "кейтеринг")
+     * @return список расходов, отсортированный по дате расхода
      */
     List<Expense> findByEventIdAndCategory(long eventId, String category);
 
@@ -36,7 +71,7 @@ public interface ExpenseDao extends Dao<Expense> {
      *
      * @param eventId    идентификатор мероприятия
      * @param searchText текст для поиска в описании
-     * @return список расходов
+     * @return список расходов, отсортированный по дате расхода
      */
     List<Expense> findByEventIdAndSearch(long eventId, String searchText);
 
@@ -46,7 +81,7 @@ public interface ExpenseDao extends Dao<Expense> {
      * @param eventId    идентификатор мероприятия
      * @param category   категория расхода
      * @param searchText текст для поиска в описании
-     * @return список расходов
+     * @return список расходов, отсортированный по дате расхода
      */
     List<Expense> findByEventIdAndCategoryAndSearch(long eventId, String category, String searchText);
 
@@ -60,10 +95,10 @@ public interface ExpenseDao extends Dao<Expense> {
 
     /**
      * Возвращает сводку расходов по категориям для указанного мероприятия.
-     * Вызов хранимой функции.
+     * Данные получаются вызовом хранимой функции.
      *
      * @param eventId идентификатор мероприятия
-     * @return карта, ключ — название категории, значение — общая сумма по категории
+     * @return карта, ключ — название категории, значение — общая сумма по данной категории
      */
     Map<String, BigDecimal> getExpenseSummaryByEventId(long eventId);
 }
