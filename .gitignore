@@ -9,7 +9,7 @@ out/
 target/
 build/
 .gradle/
-
+testerroom/
 
 *.log
 .DS_Store
