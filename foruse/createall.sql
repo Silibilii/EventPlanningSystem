@@ -188,8 +188,8 @@ CREATE TRIGGER audit_guest AFTER INSERT OR UPDATE OR DELETE ON eventschema.guest
 	DO $$
 DECLARE
     rec RECORD;
-BEGINч\
-    FOR rec IN SELECT usename FROM pg_user WHERE usename != 'postgres'
+BEGIN
+    FOR rec IN SELECT usename FROM pg_user WHERE usename == 'manager'
     LOOP
         EXECUTE 'REVOKE ALL PRIVILEGES ON DATABASE events FROM ' || quote_ident(rec.usename);
 
