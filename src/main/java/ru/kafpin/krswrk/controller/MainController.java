@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 
 
@@ -78,31 +77,28 @@ public class MainController {
                 new SimpleStringProperty(cellData.getValue().getStatus().getLocalized(LocaleManager.getBundle())));
 
         // Слушатель выбора мероприятия в таблице
-        eventTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        eventTable.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             if (newVal != null) {
                 loadEventDetails(newVal);
             }
         });
 
         // Настройка выбора языка
-        languageCombo.getItems().addAll("Русский", "English", "Deutsch", "中文");
+        languageCombo.getItems().addAll("Русский", "English", "Deutsch");
 
         String currentLang = LocaleManager.getCurrentLocale().getLanguage();
         if ("en".equals(currentLang)) {
             languageCombo.setValue("English");
         } else if ("de".equals(currentLang)) {
             languageCombo.setValue("Deutsch");
-        } else if ("zh".equals(currentLang)) {
-            languageCombo.setValue("中文");
         } else {
             languageCombo.setValue("Русский");
         }
-        languageCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
+        languageCombo.valueProperty().addListener((_, _, newVal) -> {
             Locale newLocale;
             switch (newVal) {
                 case "English": newLocale = new Locale("en"); break;
                 case "Deutsch": newLocale = new Locale("de"); break;
-                case "中文": newLocale = new Locale("zh"); break;
                 default: newLocale = new Locale("ru");
             }
             LocaleManager.setLocale(newLocale);
@@ -122,7 +118,7 @@ public class MainController {
         eventStatusFilterCombo.setButtonCell(eventStatusFilterCombo.getCellFactory().call(null));
         eventStatusFilterCombo.setValue(null);
         // Слушатель изменения фильтра – обновляет таблицу мероприятий
-        eventStatusFilterCombo.valueProperty().addListener((obs, oldVal, newVal) -> refreshEventList());
+        eventStatusFilterCombo.valueProperty().addListener((_, _, newVal) -> refreshEventList());
     }
 
     /**
@@ -197,8 +193,7 @@ public class MainController {
                 eventTable.getSelectionModel().select(found);
                 loadEventDetails(found);
                 if (currentEventDetailsController != null && tabIndex >= 0) {
-                    int finalTabIndex = tabIndex;
-                    Platform.runLater(() -> currentEventDetailsController.setSelectedTabIndex(finalTabIndex));
+                    Platform.runLater(() -> currentEventDetailsController.setSelectedTabIndex(tabIndex));
                 }
             }
         }
